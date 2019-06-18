@@ -1,0 +1,54 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "virtualMachineName": {
+      "type": "string"
+    },
+    "PSFileUri": {
+      "type": "string"
+    },
+    "PSStorageAccountName": {
+      "type": "string"
+    },
+    "PSSAKey": {
+      "type": "securestring"
+    },
+    "PSCommandFile": {
+      "type": "string"
+    },
+    "PSCommandExtensionName": {
+      "type": "string"
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('virtualMachineName'), '/', parameters('PSCommandExtensionName'))]",
+      "apiVersion": "2017-03-30",
+      "location": "[parameters('location')]",
+      "dependsOn": [],
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "CustomScriptExtension",
+        "typeHandlerVersion": "1.8",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "[parameters('PSFileUri')]"
+          ]
+        },
+        "protectedSettings": {
+          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File ', parameters('PSCommandFile'))]",
+          "storageAccountName": "[parameters('PSStorageAccountName')]",
+          "storageAccountKey": "[parameters('PSSAKey')]"
+        }
+      }
+    }
+  ]
+}

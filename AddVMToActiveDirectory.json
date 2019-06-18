@@ -1,0 +1,58 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "virtualMachineName": {
+      "type": "string"
+    },
+    "domainName": {
+      "type": "securestring"
+    },
+    "domainAdmin": {
+      "type": "securestring"
+    },
+    "domainAdminPassword": {
+      "type": "securestring"
+    },
+    "joinOptions": {
+      "type": "int"
+    },
+    "ouPath": {
+      "type": "string"
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "comments": "Join domain - JsonADDomainExtension",
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('virtualMachineName'), '/joindomain')]",
+      "dependsOn": [
+      ],
+      "location": "[parameters('location')]",
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "JsonADDomainExtension",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "Name": "[parameters('domainName')]",
+          "User": "[concat(parameters('domainAdmin'), '@', parameters('domainName'))]",
+          "Restart": "true",
+          "Options": "[parameters('joinOptions')]",
+          "OUPath": "[parameters('ouPath')]"
+        },
+        "protectedSettings": {
+          "Password": "[parameters('domainAdminPassword')]"
+        }
+      }
+    }
+  ],
+  "outputs": {
+  }
+}

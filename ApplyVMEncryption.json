@@ -1,0 +1,102 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "virtualMachineName": {
+      "type": "string"
+    },
+    "keyVaultName": {
+      "type": "string"
+    },
+    "keyVaultRgName": {
+      "type": "string"
+    },
+    "keyVaultURL": {
+      "type": "string"
+    },
+    "aadClientID": {
+      "type": "securestring"
+    },
+    "aadClientSecret": {
+      "type": "securestring"
+    },
+    "keyEncryptionKeyURL": {
+      "type": "securestring"
+    },
+    "keyEncryptionAlgorithm": {
+      "type": "string"
+    },
+    "volumeType": {
+      "type": "string"
+    },
+    "encryptionOperation": {
+      "type": "string"
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('virtualMachineName'),'/AzureDiskEncryption')]",
+      "apiVersion": "2017-12-01",
+      "location": "[parameters('location')]",
+      "properties": {
+        "publisher": "Microsoft.Azure.Security",
+        "type": "AzureDiskEncryption",
+        "typeHandlerVersion": "1.1",
+        "autoUpgradeMinorVersion": true,
+        "forceUpdateTag": "1.0",
+        "settings": {
+          "AADClientID": "[parameters('aadClientID')]",
+          "KeyVaultURL": "[parameters('keyVaultURL')]",
+          "KeyEncryptionKeyURL": "[parameters('keyEncryptionKeyURL')]",
+          "KeyEncryptionAlgorithm": "[parameters('keyEncryptionAlgorithm')]",
+          "VolumeType": "[parameters('volumeType')]",
+          "EncryptionOperation": "[parameters('encryptionOperation')]"
+        },
+        "protectedSettings": {
+          "AADClientSecret": "[parameters('aadClientSecret')]"
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-12-01",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[parameters('virtualMachineName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Compute/virtualMachines/extensions',  parameters('virtualMachineName'), 'AzureDiskEncryption')]"
+      ],
+      "properties": {
+        "storageProfile": {
+          "osDisk": {
+            "encryptionSettings": {
+              "diskEncryptionKey": {
+                "sourceVault": {
+                  "id": "[resourceId(subscription().subscriptionId,  parameters('keyVaultRgName'), 'Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+                },
+                "secretUrl": "[reference(resourceid('Microsoft.Compute/virtualMachines/extensions', parameters('virtualMachineName'), 'AzureDiskEncryption')).instanceView.statuses[0].message]"
+              },
+              "keyEncryptionKey": {
+                "sourceVault": {
+                  "id": "[resourceId(subscription().subscriptionId,  parameters('keyVaultRgName'), 'Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+                },
+                "keyUrl": "[parameters('keyEncryptionKeyURL')]"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "BitLockerKey": {
+      "type": "string",
+      "value": "[reference(resourceid('Microsoft.Compute/virtualMachines/extensions', parameters('virtualMachineName'), 'AzureDiskEncryption')).instanceView.statuses[0].message]"
+    }
+  }
+}

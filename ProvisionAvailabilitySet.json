@@ -1,0 +1,43 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "availabilitySetName": {
+      "type": "string"
+    },
+    "availabilitySetPlatformFaultDomainCount": {
+      "type": "string"
+    },
+    "availabilitySetPlatformUpdateDomainCount": {
+      "type": "string"
+    },
+    "tagEnvironmentValue": {
+      "type": "string"
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "apiVersion": "2018-10-01",
+      "location": "[parameters('location')]",
+      "name": "[parameters('availabilitySetName')]",
+      "tags": {
+        "Environment": "[parameters('tagEnvironmentValue')]"
+      },
+      "properties": {
+        "platformFaultDomainCount": "[parameters('availabilitySetPlatformFaultDomainCount')]",
+        "platformUpdateDomainCount": "[parameters('availabilitySetPlatformUpdateDomainCount')]"
+      },
+      "sku": {
+        "name": "Aligned"
+      },
+      "type": "Microsoft.Compute/availabilitySets"
+    }
+  ],
+  "outputs": {
+  }
+}
