@@ -18,7 +18,8 @@
       "type": "int"
     },
     "dataDisks": {
-      "type": "array"
+      "type": "array",
+      "defaultValue": ""
     },
     "virtualNetworkName": {
       "type": "string"
