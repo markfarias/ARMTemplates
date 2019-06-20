@@ -11,11 +11,11 @@
     "dscextensionname": {
       "type": "string"
     },
-    "dscModuleUri": {
-      "type": "string"
+    "dscPropertySettings": {
+      "type": "object"
     },
-    "dscModuleFunction": {
-      "type": "string"
+    "dscPropertyProtectedSettings": {
+      "type": "object"
     }
   },
   "variables": {
@@ -32,14 +32,8 @@
         "type": "DSC",
         "typeHandlerVersion": "2.20",
         "autoUpgradeMinorVersion": true,
-        "settings": {
-          "modulesUrl": "[parameters('dscModuleUri')]",
-          "configurationFunction": "[parameters('dscModuleFunction')]",
-          "properties": {
-            "MachineName": "[parameters('virtualMachineName')]"
-          }
-        },
-        "protectedSettings": null
+        "settings": "[parameters('dscPropertySettings')]",
+        "protectedSettings": "[parameters('dscPropertyProtectedSettings')]"
       }
     }
   ],

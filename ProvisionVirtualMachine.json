@@ -26,7 +26,19 @@
     "networkInterfaceName": {
       "type": "string"
     },
+    "networkInterfaceIpAllocation": {
+      "type": "string"
+    },
+    "networkInterfaceIpAddress": {
+      "type": "string"
+    }
     "subnetName": {
+      "type": "string"
+    },
+    "loadBalancerName": {
+      "type": "string"
+    },
+    "loadBalancerBackEndName": {
       "type": "string"
     },
     "availabilitySetName": {
@@ -50,16 +62,19 @@
     "iaasDiagnosticsStorageAccountName": {
       "type": "string"
     },
-    "iaasDiagnosticsStorageAccountId": {
-      "type": "string"
-    },
     "tagEnvironmentValue": {
       "type": "string"
     }
   },
   "variables": {
     "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-    "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
+    "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
+    "iaasDiagnosticsStorageAccountId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Storage/storageAccounts/', parameters('iaasDiagnosticsStorageAccountName'))]",
+    "lbBackendId": [
+      {
+        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')), '/backendAddressPools/', parameters('loadBalancerBackEndName'))]"
+      }
+    ]
   },
   "resources": [
     {
@@ -78,8 +93,10 @@
               "subnet": {
                 "id": "[variables('subnetRef')]"
               },
-              "privateIPAllocationMethod": "Dynamic",
-              "primary": true
+              "privateIPAllocationMethod": "[parameters('networkInterfaceIpAllocation')]",
+              "privateIPAddress": "[if(not(empty(parameters('networkInterfaceIpAddress'))), parameters('networkInterfaceIpAddress'),json('null'))]",
+              "primary": true,
+              "loadBalancerBackendAddressPools": "[if(not(empty(variables('lbBackendId'))), variables('lbBackendId'),json('null'))]"
             }
           }
         ]
@@ -455,7 +472,7 @@
         },
         "protectedSettings": {
           "storageAccountName": "[parameters('iaasDiagnosticsStorageAccountName')]",
-          "storageAccountKey": "[listKeys(parameters('iaasDiagnosticsStorageAccountId'),'2015-06-15').key1]",
+          "storageAccountKey": "[listKeys(variables('iaasDiagnosticsStorageAccountId'),'2015-06-15').key1]",
           "storageAccountEndPoint": "https://core.usgovcloudapi.net/"
         }
       },
