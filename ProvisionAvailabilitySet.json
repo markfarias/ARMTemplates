@@ -9,10 +9,10 @@
       "type": "string"
     },
     "availabilitySetPlatformFaultDomainCount": {
-      "type": "string"
+      "type": "int"
     },
     "availabilitySetPlatformUpdateDomainCount": {
-      "type": "string"
+      "type": "int"
     },
     "tagEnvironmentValue": {
       "type": "string"
