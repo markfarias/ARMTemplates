@@ -31,7 +31,7 @@
     },
     "networkInterfaceIpAddress": {
       "type": "string"
-    }
+    },
     "subnetName": {
       "type": "string"
     },
