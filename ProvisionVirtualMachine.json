@@ -19,7 +19,7 @@
     },
     "dataDisks": {
       "type": "array",
-      "defaultValue": ""
+      "defaultValue": []
     },
     "virtualNetworkName": {
       "type": "string"
