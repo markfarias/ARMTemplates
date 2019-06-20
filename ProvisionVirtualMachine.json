@@ -36,10 +36,12 @@
       "type": "string"
     },
     "loadBalancerName": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": ""
     },
     "loadBalancerBackEndName": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": ""
     },
     "availabilitySetName": {
       "type": "string"
