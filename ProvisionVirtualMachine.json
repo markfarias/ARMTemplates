@@ -75,7 +75,7 @@
     "iaasDiagnosticsStorageAccountId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Storage/storageAccounts/', parameters('iaasDiagnosticsStorageAccountName'))]",
     "lbBackendId": [
       {
-        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')), '/backendAddressPools/', parameters('loadBalancerBackEndName'))]"
+        "id": "[if(not(empty(parameters('loadBalancerName'))), concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')), '/backendAddressPools/', parameters('loadBalancerBackEndName')), json('null'))]"
       }
     ]
   },
