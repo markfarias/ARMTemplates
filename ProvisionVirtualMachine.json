@@ -99,7 +99,7 @@
               "privateIPAllocationMethod": "[parameters('networkInterfaceIpAllocation')]",
               "privateIPAddress": "[if(not(empty(parameters('networkInterfaceIpAddress'))), parameters('networkInterfaceIpAddress'),json('null'))]",
               "primary": true,
-              "loadBalancerBackendAddressPools": "[if(not(empty(variables('lbBackendId'))), variables('lbBackendId'),json('null'))]"
+              "loadBalancerBackendAddressPools": "[if(not(empty(parameters('loadBalancerName'))), variables('lbBackendId'),json('null'))]"
             }
           }
         ]
