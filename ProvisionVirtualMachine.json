@@ -123,7 +123,7 @@
       ],
       "scale": null,
       "properties": {
-        "availabilitySet": "[variables('availabilitySetId')]",
+        "availabilitySet": "[if(not(empty(parameters('availabilitySetName'))), variables('availabilitySetId'), json('null'))]",
         "hardwareProfile": {
           "vmSize": "[parameters('virtualMachineSize')]"
         },
