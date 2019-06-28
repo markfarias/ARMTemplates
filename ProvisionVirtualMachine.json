@@ -31,7 +31,8 @@
       "type": "string"
     },
     "networkInterfaceIpAddress": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": ""
     },
     "subnetName": {
       "type": "string"
@@ -45,7 +46,8 @@
       "defaultValue": ""
     },
     "availabilitySetName": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": ""
     },
     "vmAdminUsername": {
       "type": "securestring",
@@ -77,7 +79,10 @@
       {
         "id": "[if(not(empty(parameters('loadBalancerName'))), concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')), '/backendAddressPools/', parameters('loadBalancerBackEndName')), json('null'))]"
       }
-    ]
+    ],
+    "availabilitySetId": {
+      "id": "[if(not(empty(parameters('availabilitySetName'))), resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName')), json('null'))]"
+    }
   },
   "resources": [
     {
@@ -118,9 +123,7 @@
       ],
       "scale": null,
       "properties": {
-        "availabilitySet": {
-          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName'))]"
-        },
+        "availabilitySet": "[variables('availabilitySetId')]",
         "hardwareProfile": {
           "vmSize": "[parameters('virtualMachineSize')]"
         },
