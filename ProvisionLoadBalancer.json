@@ -46,62 +46,59 @@
   },
   "resources": [
     {
-      {
-        "apiVersion": "2018-01-01",
-        "location": "[parameters('location')]",
-        "type": "Microsoft.Network/loadBalancers",
-        "name": "[parameters('loadBalancerName')]",
-        "tags": {
-          "Environment": "[parameters('tagEnvironmentValue')]"
-        },
-        "dependsOn": [
+      "apiVersion": "2018-01-01",
+      "location": "[parameters('location')]",
+      "type": "Microsoft.Network/loadBalancers",
+      "name": "[parameters('loadBalancerName')]",
+      "tags": {
+        "Environment": "[parameters('tagEnvironmentValue')]"
+      },
+      "dependsOn": [
+      ],
+      "properties": {
+        "backendAddressPools": [
+          {
+            "name": "[parameters('loadBalancerBackEndName')]"
+          }
         ],
-        "properties": {
-          "backendAddressPools": [
-            {
-              "name": "[parameters('loadBalancerBackEndName')]"
-            }
-          ],
-          "frontendIPConfigurations": [
-            {
-              "name": "[parameters('loadBalancerFIPCName')]",
-              "properties": "[parameters('frontendIPConfigurationProperties')]"
-            }
-          ],
-          "loadBalancingRules": [
-            {
-              "name": "[parameters('loadBalancerRuleName')]",
-              "properties": {
-                "backendAddressPool": {
-                  "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')), '/backendAddressPools/', parameters('loadBalancerBackEndName'))]"
-                },
-                "backendPort": "[parameters('loadBalancerRulePort')]",
-                "frontendIPConfiguration": {
-                  "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')), '/frontendIpConfigurations/', parameters('loadBalancerFIPCName'))]"
-                },
-                "frontendPort": "[parameters('loadBalancerRulePort')]",
-                "idleTimeoutInMinutes": 4,
-                "probe": {
-                  "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')), '/probes/', parameters('loadBalancerProbeName'))]"
-                },
-                "protocol": "[parameters('loadBalancerRuleProtocol')]",
-                "loadDistribution": "[parameters('loadBalancerRuleDistribution')]"
-              }
-            }
-
-          ],
-          "probes": [
-            {
-              "properties": {
-                "protocol": "Tcp",
-                "port": "[parameters('loadBalancerProbePort')]",
-                "intervalInSeconds": 5,
-                "numberOfProbes": 2
+        "frontendIPConfigurations": [
+          {
+            "name": "[parameters('loadBalancerFIPCName')]",
+            "properties": "[parameters('frontendIPConfigurationProperties')]"
+          }
+        ],
+        "loadBalancingRules": [
+          {
+            "name": "[parameters('loadBalancerRuleName')]",
+            "properties": {
+              "backendAddressPool": {
+                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')), '/backendAddressPools/', parameters('loadBalancerBackEndName'))]"
               },
-              "name": "[parameters('loadBalancerProbeName')]"
+              "backendPort": "[parameters('loadBalancerRulePort')]",
+              "frontendIPConfiguration": {
+                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')), '/frontendIpConfigurations/', parameters('loadBalancerFIPCName'))]"
+              },
+              "frontendPort": "[parameters('loadBalancerRulePort')]",
+              "idleTimeoutInMinutes": 4,
+              "probe": {
+                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')), '/probes/', parameters('loadBalancerProbeName'))]"
+              },
+              "protocol": "[parameters('loadBalancerRuleProtocol')]",
+              "loadDistribution": "[parameters('loadBalancerRuleDistribution')]"
             }
-          ]
-        }
+          }
+        ],
+        "probes": [
+          {
+            "properties": {
+              "protocol": "Tcp",
+              "port": "[parameters('loadBalancerProbePort')]",
+              "intervalInSeconds": 5,
+              "numberOfProbes": 2
+            },
+            "name": "[parameters('loadBalancerProbeName')]"
+          }
+        ]
       }
     }
   ],
