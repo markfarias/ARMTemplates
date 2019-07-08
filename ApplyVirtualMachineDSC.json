@@ -15,7 +15,8 @@
       "type": "object"
     },
     "dscPropertyProtectedSettings": {
-      "type": "object"
+      "type": "object",
+      "defaultValue": {}
     }
   },
   "variables": {
@@ -33,7 +34,7 @@
         "typeHandlerVersion": "2.20",
         "autoUpgradeMinorVersion": true,
         "settings": "[parameters('dscPropertySettings')]",
-        "protectedSettings": "[parameters('dscPropertyProtectedSettings')]"
+        "protectedSettings": "[if(not(empty(parameters('dscPropertyProtectedSettings'))), parameters('dscPropertyProtectedSettings'), json('null'))]"
       }
     }
   ],
