@@ -30,7 +30,8 @@
       "type": "string"
     },
     "loadBalancerRuleDistribution": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "Default"
     },
     "publicIpAdressName": {
       "type": "string"

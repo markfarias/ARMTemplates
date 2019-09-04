@@ -37,6 +37,9 @@
     "subnetName": {
       "type": "string"
     },
+    "acceleratedNetworking": {
+      "type": "bool"
+    },
     "loadBalancerName": {
       "type": "string",
       "defaultValue": ""
@@ -107,7 +110,8 @@
               "loadBalancerBackendAddressPools": "[if(not(empty(parameters('loadBalancerName'))), variables('lbBackendId'),json('null'))]"
             }
           }
-        ]
+        ],
+        "enableAcceleratedNetworking": "[parameters('acceleratedNetworking')]"
       }
     },
     {
