@@ -11,12 +11,6 @@
     "PSFileUri": {
       "type": "string"
     },
-    "PSStorageAccountName": {
-      "type": "string"
-    },
-    "PSSAKey": {
-      "type": "securestring"
-    },
     "PSCommandFile": {
       "type": "string"
     },
@@ -44,9 +38,7 @@
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File ', parameters('PSCommandFile'))]",
-          "storageAccountName": "[parameters('PSStorageAccountName')]",
-          "storageAccountKey": "[parameters('PSSAKey')]"
+          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File ', parameters('PSCommandFile'))]"
         }
       }
     }
