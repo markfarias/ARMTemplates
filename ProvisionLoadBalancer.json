@@ -33,9 +33,6 @@
       "type": "string",
       "defaultValue": "Default"
     },
-    "publicIpAdressName": {
-      "type": "string"
-    },
     "frontendIPConfigurationProperties": {
       "type": "object"
     },
