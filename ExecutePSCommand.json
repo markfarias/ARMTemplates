@@ -14,6 +14,9 @@
     "PSCommandFile": {
       "type": "string"
     },
+    "PSCommandArguments": {
+      "type": "string"
+    },
     "PSCommandExtensionName": {
       "type": "string"
     }
@@ -38,7 +41,7 @@
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File ', parameters('PSCommandFile'))]"
+          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File ', parameters('PSCommandFile'), ' ', parameters('PSCommandArguments'))]"
         }
       }
     }
