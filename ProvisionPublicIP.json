@@ -22,7 +22,7 @@
         "name": "Basic",
         "tier": "Regional"
       },
-      "name": "[parameters('publicIpAdressName')]",
+      "name": "[parameters('publicIpAddressName')]",
       "location": "[parameters('location')]",
       "tags": {
         "Environment": "[parameters('tagEnvironmentValue')]"
