@@ -11,6 +11,9 @@
     "imageRef": {
       "type": "object"
     },
+    "planRef": {
+      "type": "object"
+    },
     "virtualMachineSize": {
       "type": "string"
     },
@@ -165,7 +168,8 @@
             "storageUri": "[concat('https', '://', parameters('bootDiagnosticsStorageAccountName'), '.blob.core.usgovcloudapi.net', '/')]"
           }
         }
-      }
+      },
+      "plan": "[parameters('planRef')]"
     }
   ]
 }
