@@ -40,6 +40,10 @@
     "subnetName": {
       "type": "string"
     },
+    "dnsServers": {
+      "type": "string",
+      "defaultValue": ""
+    },
     "acceleratedNetworking": {
       "type": "bool"
     },
@@ -119,6 +123,11 @@
             }
           }
         ],
+        "dnsSettings": {
+          "dnsServers": [
+            "[parameters('dnsServers')]"
+          ]
+        },
         "enableAcceleratedNetworking": "[parameters('acceleratedNetworking')]"
       }
     },
