@@ -1,0 +1,179 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "virtualMachineName": {
+      "type": "string"
+    },
+    "imageRef": {
+      "type": "object"
+    },
+    "planRef": {
+      "type": "object"
+    },
+    "virtualMachineSize": {
+      "type": "string"
+    },
+    "osDiskSize": {
+      "type": "int"
+    },
+    "dataDisks": {
+      "type": "array",
+      "defaultValue": []
+    },
+    "baseTemplateUri": {
+      "type":  "string"
+    },
+    "nicCount": {
+      "type": "int"
+    },
+    "networkInterfaces": {
+      "type": "object",
+      "defaultValue": []
+    },
+    "dnsServers": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "acceleratedNetworking": {
+      "type": "bool"
+    },
+    "availabilitySetName": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "vmAdminUsername": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
+    },
+    "vmAdminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
+    },
+    "bootDiagnosticsStorageAccountName": {
+      "type": "string"
+    },
+    "tagEnvironmentValue": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "nestedtemplates": {
+      "provisioningNicUrl": "[concat(parameters('baseTemplateUri'), '/ProvisionNic.json')]"
+      },
+    "availabilitySetId": {
+      "id": "[if(not(empty(parameters('availabilitySetName'))), resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName')), json('null'))]"
+    },
+    "networkInterfaceAssignments": [
+      {
+        "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces')['0'].name)]",
+        "properties": {
+          "primary": true
+        }
+      },
+      {
+        "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces')['1'].name)]",
+        "properties": {
+          "primary": false
+        }
+      },
+      {
+        "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces')['2'].name)]",
+        "properties": {
+          "primary": false
+        }
+      }
+    ]
+    },
+    "resources": [
+      {
+        "name": "ProvisionNetworkInterface",
+        "comments": "Creates one or more network interfaces for the virtual machine",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2017-05-10",
+        "dependsOn": [
+        ],
+        "copy": {
+          "name": "provisionNicLoop",
+          "count": "[parameters('nicCount')]",
+          "mode": "Parallel"
+        },
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('nestedtemplates').provisioningNicUrl]",
+            "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+            "location": {
+              "value": "[parameters('location')]"
+            },
+            "networkInterfaceName": {
+              "value": "[parameters('networkInterfaces')['copyIndex(0)'].name]"
+            },
+            "dnsServers": {
+              "value": "[parameters('dnsServers')]"
+            },
+            "acceleratedNetworking": {
+              "value": "[parameters('acceleratedNetworking')]"
+            },
+            "tagEnvironmentValue": {
+              "value": "[parameters('tagEnvironmentValue')]"
+            }
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Compute/virtualMachines",
+        "name": "[parameters('virtualMachineName')]",
+        "apiVersion": "2017-03-30",
+        "location": "[parameters('location')]",
+        "tags": {
+          "Environment": "[parameters('tagEnvironmentValue')]"
+        },
+        "dependsOn": [
+          "Microsoft.Resources/deployments/ProvisionNetworkInterface"
+        ],
+        "scale": null,
+        "properties": {
+          "availabilitySet": "[if(not(empty(parameters('availabilitySetName'))), variables('availabilitySetId'), json('null'))]",
+          "hardwareProfile": {
+            "vmSize": "[parameters('virtualMachineSize')]"
+          },
+          "storageProfile": {
+            "imageReference": "[parameters('imageRef')]",
+            "osDisk": {
+              "createOption": "FromImage",
+              "managedDisk": {
+                "storageAccountType": "Standard_LRS"
+              },
+              "diskSizeGB": "[parameters('osDiskSize')]"
+            },
+            "dataDisks": "[parameters('dataDisks')]"
+          },
+          "osProfile": {
+            "computerName": "[parameters('virtualMachineName')]",
+            "adminUsername": "[parameters('vmAdminUsername')]",
+            "adminPassword": "[parameters('vmAdminPassword')]"
+          },
+          "networkProfile": {
+            "networkInterfaces": "[variables('networkInterfaceAssignments')]"
+          },
+          "diagnosticsProfile": {
+            "bootDiagnostics": {
+              "enabled": true,
+              "storageUri": "[concat('https', '://', parameters('bootDiagnosticsStorageAccountName'), '.blob.core.usgovcloudapi.net', '/')]"
+            }
+          }
+        },
+        "plan": "[parameters('planRef')]"
+      }
+    ]
+  }
