@@ -142,7 +142,7 @@
           "Environment": "[parameters('tagEnvironmentValue')]"
         },
         "dependsOn": [
-          "[concat('ProvisionNetworkInterface--', copyIndex())]"
+          "provisionNicLoop"
         ],
         "scale": null,
         "properties": {
