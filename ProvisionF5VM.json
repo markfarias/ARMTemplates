@@ -118,6 +118,9 @@
             "networkInterfaceName": {
               "value": "[parameters('networkInterfaces')['copyIndex()'].name]"
             },
+            "networkIpConfiguration": {
+              "value": "[parameters('networkInterfaces')['copyIndex()'].ipConfiguration]"
+            },
             "dnsServers": {
               "value": "[parameters('dnsServers')]"
             },
