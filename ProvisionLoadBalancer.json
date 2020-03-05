@@ -5,6 +5,9 @@
     "location": {
       "type": "string"
     },
+    "loadBalancerSku": {
+      "type": "string"
+    },
     "loadBalancerName": {
       "type": "string"
     },
@@ -48,6 +51,9 @@
       "location": "[parameters('location')]",
       "type": "Microsoft.Network/loadBalancers",
       "name": "[parameters('loadBalancerName')]",
+      "sku": {
+        "name": "[parameters('loadBalancerSku')]"
+      },
       "tags": {
         "Environment": "[parameters('tagEnvironmentValue')]"
       },
