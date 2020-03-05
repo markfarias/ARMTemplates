@@ -116,7 +116,7 @@
               "value": "[parameters('location')]"
             },
             "networkInterfaceName": {
-              "value": "[parameters('networkInterfaces')['copyIndex(0)'].name]"
+              "value": "[parameters('networkInterfaces')['copyIndex()'].name]"
             },
             "dnsServers": {
               "value": "[parameters('dnsServers')]"
