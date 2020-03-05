@@ -8,6 +8,9 @@
     "publicIpAddressName": {
       "type": "string"
     },
+    "publicIpAddressSku": {
+      "type": "string"
+    },
     "tagEnvironmentValue": {
       "type": "string"
     }
@@ -19,8 +22,7 @@
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/publicIPAddresses",
       "sku": {
-        "name": "Basic",
-        "tier": "Regional"
+        "name": "[parameters('publicIpAddressSku')]"
       },
       "name": "[parameters('publicIpAddressName')]",
       "location": "[parameters('location')]",
