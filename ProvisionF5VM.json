@@ -97,7 +97,7 @@
     },
     "resources": [
       {
-        "name": "[concat('ProvisionNetworkInterface--', copyIndex())]",
+        "name": "[concat(parameters('virtualMachineName'), '-ProvisionNetworkInterface-', copyIndex())]",
         "comments": "Creates one or more network interfaces for the virtual machine",
         "type": "Microsoft.Resources/deployments",
         "apiVersion": "2017-05-10",
