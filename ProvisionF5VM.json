@@ -25,7 +25,7 @@
       "defaultValue": []
     },
     "baseTemplateUri": {
-      "type":  "string"
+      "type": "string"
     },
     "nicCount": {
       "type": "int"
@@ -40,6 +40,9 @@
     },
     "acceleratedNetworking": {
       "type": "bool"
+    },
+    "targetVnetRgName": {
+      "type": "string"
     },
     "availabilitySetName": {
       "type": "string",
@@ -73,19 +76,19 @@
     },
     "networkInterfaceAssignments": [
       {
-        "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces')['0'].name)]",
+        "id": "[resourceId(parameters('targetVnetRgName'), 'Microsoft.Network/networkInterfaces', parameters('networkInterfaces')['0'].name)]",
         "properties": {
           "primary": true
         }
       },
       {
-        "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces')['1'].name)]",
+        "id": "[resourceId(parameters('targetVnetRgName'), 'Microsoft.Network/networkInterfaces', parameters('networkInterfaces')['1'].name)]",
         "properties": {
           "primary": false
         }
       },
       {
-        "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces')['2'].name)]",
+        "id": "[resourceId(parameters('targetVnetRgName'), 'Microsoft.Network/networkInterfaces', parameters('networkInterfaces')['2'].name)]",
         "properties": {
           "primary": false
         }
