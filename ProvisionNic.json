@@ -38,11 +38,6 @@
       },
       "properties": {
         "ipConfigurations": "[variables('networkIpConfigurationArray')]",
-        "dnsSettings": {
-          "dnsServers": [
-            "[parameters('dnsServers')]"
-          ]
-        },
         "enableAcceleratedNetworking": "[parameters('acceleratedNetworking')]"
       }
     }
