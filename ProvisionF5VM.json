@@ -78,7 +78,7 @@
       {
         "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces')['0'].name)]",
         "properties": {
-          "primary": false
+          "primary": true
         }
       },
       {
@@ -90,7 +90,7 @@
       {
         "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces')['2'].name)]",
         "properties": {
-          "primary": true
+          "primary": false
         }
       }
     ]
@@ -123,6 +123,9 @@
             },
             "networkIpConfiguration": {
               "value": "[parameters('networkInterfaces')[string(copyIndex())].ipConfiguration]"
+            },
+            "enableIPForwarding": {
+              "value": "[parameters('networkInterfaces')[string(copyIndex())].enableIPForwarding]"
             },
             "dnsServers": {
               "value": "[parameters('dnsServers')]"
