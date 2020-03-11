@@ -16,7 +16,8 @@
       "defaultValue": ""
     },
     "acceleratedNetworking": {
-      "type": "bool"
+      "type": "bool",
+      "defaultValue": false
     },
     "enableIPForwarding": {
       "type": "bool",
