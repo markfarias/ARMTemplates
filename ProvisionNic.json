@@ -9,7 +9,7 @@
       "type": "string"
     },
     "networkIpConfiguration": {
-      "type": "object"
+      "type": "array"
     },
     "dnsServers": {
       "type": "string",
