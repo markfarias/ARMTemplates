@@ -18,14 +18,13 @@
     "acceleratedNetworking": {
       "type": "bool"
     },
+    "enableIPForwarding": {
+      "type": "bool",
+      "defaultValue": false
+    },
     "tagEnvironmentValue": {
       "type": "string"
     }
-  },
-  "variables": {
-    "networkIpConfigurationArray": [
-      "[parameters('networkIpConfiguration')]"
-    ]
   },
   "resources": [
     {
@@ -37,8 +36,9 @@
         "Environment": "[parameters('tagEnvironmentValue')]"
       },
       "properties": {
-        "ipConfigurations": "[variables('networkIpConfigurationArray')]",
-        "enableAcceleratedNetworking": "[parameters('acceleratedNetworking')]"
+        "ipConfigurations": "[parameters('networkIpConfiguration')]",
+        "enableAcceleratedNetworking": "[parameters('acceleratedNetworking')]",
+        "enableIPForwarding": "[parameters('enableIPForwarding')]"
       }
     }
   ]
