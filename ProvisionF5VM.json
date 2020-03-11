@@ -131,7 +131,7 @@
               "value": "[parameters('dnsServers')]"
             },
             "acceleratedNetworking": {
-              "value": "[parameters('acceleratedNetworking')]"
+              "value": "[parameters('networkInterfaces')[string(copyIndex())].enableAcceleratedNetworking]"
             },
             "tagEnvironmentValue": {
               "value": "[parameters('tagEnvironmentValue')]"
