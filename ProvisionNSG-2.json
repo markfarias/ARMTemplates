@@ -20,7 +20,7 @@
   "resources": [
     {
       "type": "Microsoft.Network/networkSecurityGroups",
-      "name": "[parameters('name')[copyIndex()]]",
+      "name": "[parameters('name')]",
       "apiVersion": "2018-11-01",
       "location": "[parameters('location')]",
       "properties": "[parameters('properties')]",
