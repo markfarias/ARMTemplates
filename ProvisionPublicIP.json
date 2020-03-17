@@ -37,7 +37,7 @@
         "publicIPAllocationMethod": "Static",
         "publicIPAddressVersion": "IPv4",
         "dnsSettings": {
-          "domainNameLabel": "[parameters('publicIpDnsLabel')]"
+          "domainNameLabel": "[if(not(empty(parameters('publicIpDnsLabel'))), parameters('publicIpDnsLabel'), json('null'))]"
         }
       }
     }
