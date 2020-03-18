@@ -11,9 +11,9 @@
     "publicIpAddressSku": {
       "type": "string"
     },
-    "publicIpDnsLabel": {
-      "type": "string",
-      "defaultValue": ""
+    "publicIpProperties": {
+      "type": "object",
+      "defaultValue": null
     },
     "tagEnvironmentValue": {
       "type": "string"
@@ -33,13 +33,7 @@
       "tags": {
         "Environment": "[parameters('tagEnvironmentValue')]"
       },
-      "properties": {
-        "publicIPAllocationMethod": "Static",
-        "publicIPAddressVersion": "IPv4",
-        "dnsSettings": {
-          "domainNameLabel": "[if(not(empty(parameters('publicIpDnsLabel'))), parameters('publicIpDnsLabel'), json('null'))]"
-        }
-      }
+      "properties": "[parameters('publicIpProperties')]"
     }
   ],
   "outputs": {
