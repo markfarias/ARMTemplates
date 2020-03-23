@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
@@ -6,10 +6,10 @@
       "type": "string"
     },
     "name": {
-      "type": "array"
+      "type": "string"
     },
-    "rules": {
-      "type": "array"
+    "properties": {
+      "type": "object"
     },
     "tagEnvironmentValue": {
       "type": "string"
@@ -20,17 +20,10 @@
   "resources": [
     {
       "type": "Microsoft.Network/networkSecurityGroups",
-      "name": "[parameters('name')[copyIndex()]]",
+      "name": "[parameters('name')]",
       "apiVersion": "2018-11-01",
       "location": "[parameters('location')]",
-      "copy": {
-        "name": "provisionNSGLoop",
-        "count": "[length(parameters('name'))]",
-        "mode": "Parallel"
-      },
-      "properties": {
-        "securityRules": "[parameters('rules')[copyIndex()]]"
-      },
+      "properties": "[parameters('properties')]",
       "resources": [],
       "dependsOn": [],
       "tags": {
