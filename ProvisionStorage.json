@@ -1,0 +1,49 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "saName": {
+      "type": "string"
+    },
+    "saSkuName": {
+      "type": "string"
+    },
+    "saSkuTier": {
+      "type": "string"
+    },
+    "saKind": {
+      "type": "string"
+    },
+    "saProperties": {
+      "type": "object"
+    },
+    "tagEnvironmentValue": {
+      "type": "string"
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[parameters('saName')]",
+      "apiVersion": "2019-04-01",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('saSkuName')]",
+        "tier": "[parameters('saSkuTier')]"
+      },
+      "kind": "[parameters('saKind')]",
+      "properties": "[parameters('saProperties')]",
+      "dependsOn": [],
+      "tags": {
+        "Environment": "[parameters('tagEnvironmentValue')]"
+      }
+    }
+  ],
+  "outputs": {
+  }
+}
