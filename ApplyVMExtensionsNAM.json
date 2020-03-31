@@ -31,36 +31,6 @@
   "resources": [
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('virtualMachineName'), '/IaaSAntimalware')]",
-      "apiVersion": "2017-03-30",
-      "location": "[parameters('location')]",
-      "scale": null,
-      "properties": {
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "Exclusions": {
-            "Paths": "",
-            "Extensions": "",
-            "Processes": ""
-          },
-          "RealtimeProtectionEnabled": "true",
-          "ScheduledScanSettings": {
-            "isEnabled": "false",
-            "scanType": "Quick",
-            "day": "7",
-            "time": "120"
-          }
-        },
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.1"
-      },
-      "dependsOn": [
-      ]
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('virtualMachineName'), '/IaaSDiagnostics')]",
       "apiVersion": "2017-03-30",
       "location": "[parameters('location')]",
