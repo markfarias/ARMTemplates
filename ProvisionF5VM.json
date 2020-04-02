@@ -27,9 +27,6 @@
     "baseTemplateUri": {
       "type": "string"
     },
-    "nicCount": {
-      "type": "int"
-    },
     "networkInterfaces": {
       "type": "array",
       "defaultValue": []
@@ -37,12 +34,6 @@
     "dnsServers": {
       "type": "string",
       "defaultValue": ""
-    },
-    "acceleratedNetworking": {
-      "type": "bool"
-    },
-    "targetVnetRgName": {
-      "type": "string"
     },
     "availabilitySetName": {
       "type": "string",
@@ -126,9 +117,6 @@
           },
           "enableIPForwarding": {
             "value": "[parameters('networkInterfaces')[copyIndex()].enableIPForwarding]"
-          },
-          "dnsServers": {
-            "value": "[parameters('dnsServers')]"
           },
           "acceleratedNetworking": {
             "value": "[parameters('networkInterfaces')[copyIndex()].enableAcceleratedNetworking]"
