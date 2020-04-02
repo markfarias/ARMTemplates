@@ -21,38 +21,18 @@
       "type": "array",
       "defaultValue": []
     },
-    "virtualNetworkName": {
+    "baseTemplateUri": {
       "type": "string"
     },
-    "networkInterfaceName": {
-      "type": "string"
+    "networkInterfaces": {
+      "type": "array",
+      "defaultValue": []
     },
-    "networkInterfaceIpAllocation": {
-      "type": "string"
-    },
-    "networkInterfaceIpAddress": {
-      "type": "string",
-      "defaultValue": ""
-    },
-    "subnetName": {
-      "type": "string"
-    },
-    "acceleratedNetworking": {
-      "type": "bool"
-    },
-    "loadBalancerName": {
-      "type": "string",
-      "defaultValue": ""
-    },
-    "loadBalancerBackEndName": {
-      "type": "string",
-      "defaultValue": ""
+    "networkInterfaceAssignments": {
+      "type": "array",
+      "defaultValue": []
     },
     "availabilitySetName": {
-      "type": "string",
-      "defaultValue": ""
-    },
-    "asgId": {
       "type": "string",
       "defaultValue": ""
     },
@@ -82,47 +62,52 @@
     }
   },
   "variables": {
-    "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-    "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
-    "lbBackendId": [
-      {
-        "id": "[if(not(empty(parameters('loadBalancerName'))), concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')), '/backendAddressPools/', parameters('loadBalancerBackEndName')), json('null'))]"
-      }
-    ],
+    "nestedtemplates": {
+      "provisioningNicUrl": "[concat(parameters('baseTemplateUri'), '/ProvisionNic.json')]"
+    },
     "availabilitySetId": {
       "id": "[if(not(empty(parameters('availabilitySetName'))), resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName')), json('null'))]"
     }
   },
   "resources": [
     {
-      "type": "Microsoft.Network/networkInterfaces",
-      "name": "[parameters('networkInterfaceName')]",
-      "apiVersion": "2018-01-01",
-      "location": "[parameters('location')]",
-      "tags": {
-        "Environment": "[parameters('tagEnvironmentValue')]"
+      "name": "[concat(parameters('virtualMachineName'), '-ProvisionNetworkInterface-', copyIndex())]",
+      "comments": "",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "dependsOn": [
+      ],
+      "copy": {
+        "name": "provisionNicLoop",
+        "count": "[length(parameters('networkInterfaces'))]",
+        "mode": "Parallel"
       },
       "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "subnet": {
-                "id": "[variables('subnetRef')]"
-              },
-              "applicationSecurityGroups": [
-                {
-                  "id": "[if(not(empty(parameters('asgId'))), parameters('asgId'), json('null'))]"
-                }
-              ],
-              "privateIPAllocationMethod": "[parameters('networkInterfaceIpAllocation')]",
-              "privateIPAddress": "[if(not(empty(parameters('networkInterfaceIpAddress'))), parameters('networkInterfaceIpAddress'),json('null'))]",
-              "primary": true,
-              "loadBalancerBackendAddressPools": "[if(not(empty(parameters('loadBalancerName'))), variables('lbBackendId'),json('null'))]"
-            }
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('nestedtemplates').provisioningNicUrl]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "networkInterfaceName": {
+            "value": "[parameters('networkInterfaces')[copyIndex()].name]"
+          },
+          "networkIpConfiguration": {
+            "value": "[parameters('networkInterfaces')[copyIndex()].ipConfiguration]"
+          },
+          "acceleratedNetworking": {
+            "value": "[parameters('networkInterfaces')[copyIndex()].enableAcceleratedNetworking]"
+          },
+          "enableIPForwarding": {
+            "value": "[parameters('networkInterfaces')[copyIndex()].enableIPForwarding]"
+          },
+          "tagEnvironmentValue": {
+            "value": "[parameters('tagEnvironmentValue')]"
           }
-        ],
-        "enableAcceleratedNetworking": "[parameters('acceleratedNetworking')]"
+        }
       }
     },
     {
@@ -134,7 +119,7 @@
         "Environment": "[parameters('tagEnvironmentValue')]"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName'))]"
+        "provisionNicLoop"
       ],
       "scale": null,
       "properties": {
@@ -164,11 +149,7 @@
           "secrets": []
         },
         "networkProfile": {
-          "networkInterfaces": [
-            {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName'))]"
-            }
-          ]
+          "networkInterfaces": "[parameters('networkInterfaceAssignments')]"
         },
         "diagnosticsProfile": {
           "bootDiagnostics": {
