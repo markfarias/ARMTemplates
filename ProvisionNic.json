@@ -11,10 +11,6 @@
     "networkIpConfiguration": {
       "type": "array"
     },
-    "dnsServers": {
-      "type": "string",
-      "defaultValue": ""
-    },
     "acceleratedNetworking": {
       "type": "bool",
       "defaultValue": false
