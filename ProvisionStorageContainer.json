@@ -21,7 +21,7 @@
     {
       "type": "Microsoft.Storage/storageAccounts/containers",
       "apiVersion": "2019-04-01",
-      "name": "[concat(parameters('storageAccountName'), '/', parameters('containerName'))]",
+      "name": "[concat(parameters('storageAccountName'), '/default/', parameters('containerName'))]",
       "dependsOn": [],
       "properties": "[parameters('containerProperties')]"
     }
