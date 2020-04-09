@@ -13,9 +13,6 @@
     },
     "containerProperties": {
       "type": "object"
-    },
-    "tagEnvironmentValue": {
-      "type": "string"
     }
   },
   "variables": {
