@@ -129,13 +129,6 @@
         },
         "storageProfile": {
           "imageReference": "[parameters('imageRef')]",
-          "osDisk": {
-            "createOption": "FromImage",
-            "managedDisk": {
-              "storageAccountType": "Standard_LRS"
-            },
-            "diskSizeGB": "[parameters('osDiskSize')]"
-          },
           "dataDisks": "[parameters('dataDisks')]"
         },
         "osProfile": {
