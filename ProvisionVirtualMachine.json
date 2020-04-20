@@ -128,8 +128,7 @@
           "vmSize": "[parameters('virtualMachineSize')]"
         },
         "storageProfile": {
-          "imageReference": "[parameters('imageRef')]",
-          "dataDisks": "[parameters('dataDisks')]"
+          "imageReference": "[parameters('imageRef')]"
         },
         "osProfile": {
           "computerName": "[parameters('virtualMachineName')]",
