@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
@@ -14,8 +14,8 @@
     "subnets": {
       "type": "array"
     },
-    "tagEnvironmentValue": {
-      "type": "string"
+    "tags": {
+      "type": "object"
     }
   },
   "variables": {
@@ -27,9 +27,7 @@
       "location": "[parameters('location')]",
       "apiVersion": "2018-11-01",
       "dependsOn": [],
-      "tags": {
-        "Environment": "[parameters('tagEnvironmentValue')]"
-      },
+      "tags": "[parameters('tags')]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
