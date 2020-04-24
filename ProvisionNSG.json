@@ -11,8 +11,8 @@
     "properties": {
       "type": "object"
     },
-    "tagEnvironmentValue": {
-      "type": "string"
+    "tags": {
+      "type": "object"
     }
   },
   "variables": {
@@ -26,9 +26,7 @@
       "properties": "[parameters('properties')]",
       "resources": [],
       "dependsOn": [],
-      "tags": {
-        "Environment": "[parameters('tagEnvironmentValue')]"
-      }
+      "tags": "[parameters('tags')]"
     }
   ],
   "outputs": {
