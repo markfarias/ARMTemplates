@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
@@ -15,8 +15,8 @@
       "type": "object",
       "defaultValue": null
     },
-    "tagEnvironmentValue": {
-      "type": "string"
+    "tags": {
+      "type": "object"
     }
   },
   "variables": {
@@ -30,9 +30,7 @@
       },
       "name": "[parameters('publicIpAddressName')]",
       "location": "[parameters('location')]",
-      "tags": {
-        "Environment": "[parameters('tagEnvironmentValue')]"
-      },
+      "tags": "[parameters('tags')]",
       "properties": "[parameters('publicIpProperties')]"
     }
   ],
