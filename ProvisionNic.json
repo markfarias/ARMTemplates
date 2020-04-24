@@ -19,8 +19,8 @@
       "type": "bool",
       "defaultValue": false
     },
-    "tagEnvironmentValue": {
-      "type": "string"
+    "tags": {
+      "type": "object"
     }
   },
   "resources": [
@@ -29,9 +29,7 @@
       "name": "[parameters('networkInterfaceName')]",
       "apiVersion": "2018-01-01",
       "location": "[parameters('location')]",
-      "tags": {
-        "Environment": "[parameters('tagEnvironmentValue')]"
-      },
+      "tags": "[parameters('tags')]",
       "properties": {
         "ipConfigurations": "[parameters('networkIpConfiguration')]",
         "enableAcceleratedNetworking": "[parameters('acceleratedNetworking')]",
