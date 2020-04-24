@@ -8,18 +8,11 @@
     "virtualMachineName": {
       "type": "string"
     },
-    "imageRef": {
+    "storageProfile": {
       "type": "object"
     },
     "virtualMachineSize": {
       "type": "string"
-    },
-    "osDiskSize": {
-      "type": "int"
-    },
-    "dataDisks": {
-      "type": "array",
-      "defaultValue": []
     },
     "baseTemplateUri": {
       "type": "string"
@@ -57,8 +50,8 @@
     "vmExtensionNestedTemplateUri": {
       "type": "string"
     },
-    "tagEnvironmentValue": {
-      "type": "string"
+    "tags": {
+      "type": "object"
     }
   },
   "variables": {
@@ -104,8 +97,8 @@
           "enableIPForwarding": {
             "value": "[parameters('networkInterfaces')[copyIndex()].enableIPForwarding]"
           },
-          "tagEnvironmentValue": {
-            "value": "[parameters('tagEnvironmentValue')]"
+          "tags": {
+            "value": "[parameters('tags')]"
           }
         }
       }
@@ -115,9 +108,7 @@
       "name": "[parameters('virtualMachineName')]",
       "apiVersion": "2017-03-30",
       "location": "[parameters('location')]",
-      "tags": {
-        "Environment": "[parameters('tagEnvironmentValue')]"
-      },
+      "tags": "[parameters('tags')]",
       "dependsOn": [
         "provisionNicLoop"
       ],
@@ -127,9 +118,7 @@
         "hardwareProfile": {
           "vmSize": "[parameters('virtualMachineSize')]"
         },
-        "storageProfile": {
-          "imageReference": "[parameters('imageRef')]"
-        },
+        "storageProfile": "[parameters('storageProfile')]",
         "osProfile": {
           "computerName": "[parameters('virtualMachineName')]",
           "adminUsername": "[parameters('vmAdminUsername')]",
