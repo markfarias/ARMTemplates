@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
@@ -14,8 +14,8 @@
     "availabilitySetPlatformUpdateDomainCount": {
       "type": "int"
     },
-    "tagEnvironmentValue": {
-      "type": "string"
+    "tags": {
+      "type": "object"
     }
   },
   "variables": {
@@ -25,9 +25,7 @@
       "apiVersion": "2018-10-01",
       "location": "[parameters('location')]",
       "name": "[parameters('availabilitySetName')]",
-      "tags": {
-        "Environment": "[parameters('tagEnvironmentValue')]"
-      },
+      "tags": "[parameters('tags')]",
       "properties": {
         "platformFaultDomainCount": "[parameters('availabilitySetPlatformFaultDomainCount')]",
         "platformUpdateDomainCount": "[parameters('availabilitySetPlatformUpdateDomainCount')]"
