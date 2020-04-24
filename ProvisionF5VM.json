@@ -54,8 +54,8 @@
     "bootDiagnosticsStorageAccountName": {
       "type": "string"
     },
-    "tagEnvironmentValue": {
-      "type": "string"
+    "tags": {
+      "type": "object"
     }
   },
   "variables": {
@@ -121,8 +121,8 @@
           "acceleratedNetworking": {
             "value": "[parameters('networkInterfaces')[copyIndex()].enableAcceleratedNetworking]"
           },
-          "tagEnvironmentValue": {
-            "value": "[parameters('tagEnvironmentValue')]"
+          "tags": {
+            "value": "[parameters('tags')]"
           }
         }
       }
@@ -132,9 +132,7 @@
       "name": "[parameters('virtualMachineName')]",
       "apiVersion": "2017-03-30",
       "location": "[parameters('location')]",
-      "tags": {
-        "Environment": "[parameters('tagEnvironmentValue')]"
-      },
+      "tags": "[parameters('tags')]",
       "dependsOn": [
         "provisionNicLoop"
       ],
