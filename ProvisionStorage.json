@@ -5,14 +5,20 @@
     "location": {
       "type": "string"
     },
-    "virtualNetworkName": {
+    "saName": {
       "type": "string"
     },
-    "virtualNetworkAddressRange": {
+    "saSkuName": {
       "type": "string"
     },
-    "subnets": {
-      "type": "array"
+    "saSkuTier": {
+      "type": "string"
+    },
+    "saKind": {
+      "type": "string"
+    },
+    "saProperties": {
+      "type": "object"
     },
     "tags": {
       "type": "object"
@@ -22,20 +28,18 @@
   },
   "resources": [
     {
-      "name": "[parameters('virtualNetworkName')]",
-      "type": "Microsoft.Network/virtualNetworks",
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[parameters('saName')]",
+      "apiVersion": "2019-04-01",
       "location": "[parameters('location')]",
-      "apiVersion": "2018-11-01",
+      "sku": {
+        "name": "[parameters('saSkuName')]",
+        "tier": "[parameters('saSkuTier')]"
+      },
+      "kind": "[parameters('saKind')]",
+      "properties": "[parameters('saProperties')]",
       "dependsOn": [],
-      "tags": "[parameters('tags')]",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[parameters('virtualNetworkAddressRange')]"
-          ]
-        },
-        "subnets": "[parameters('subnets')]"
-      }
+      "tags": "[parameters('tags')]"
     }
   ],
   "outputs": {
