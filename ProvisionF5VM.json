@@ -31,10 +31,6 @@
       "type": "array",
       "defaultValue": []
     },
-    "dnsServers": {
-      "type": "string",
-      "defaultValue": ""
-    },
     "availabilitySetName": {
       "type": "string",
       "defaultValue": ""
