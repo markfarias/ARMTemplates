@@ -343,7 +343,7 @@
         },
         "protectedSettings": {
           "storageAccountName": "[parameters('iaasDiagnosticsStorageAccountName')]",
-          "storageAccountKey": "[listKeys(variables('iaasDiagnosticsStorageAccountId'),'2015-06-15').key1]",
+          "storageAccountKey": "[listKeys(variables('iaasDiagnosticsStorageAccountId'),'2015-06-15').key2]",
           "storageAccountEndPoint": "https://core.usgovcloudapi.net/"
         }
       },
