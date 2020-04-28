@@ -339,7 +339,11 @@
             }
           }
         },
-        "protectedSettings": "[parameters('iaasDiagnosticsStorageAccount')]"
+        "protectedSettings": {
+          "storageAccountName": "[parameters('iaasDiagnosticsStorageAccount').storageAccountName]",
+          "storageAccountKey": "[listkeys(parameters('iaasDiagnosticsStorageAccount').storageAccountId, '2015-05-01-preview').key2]",
+          "storageAccountEndPoint": "https://core.windows.net"
+        }
       },
       "dependsOn": [
       ]
