@@ -44,8 +44,8 @@
     "bootDiagnosticsStorageAccountName": {
       "type": "string"
     },
-    "iaasDiagnosticsStorageAccountName": {
-      "type": "string"
+    "iaasDiagnosticsStorageAccount": {
+      "type": "object"
     },
     "vmExtensionNestedTemplateUri": {
       "type": "string"
@@ -161,8 +161,8 @@
           "virtualMachineName": {
             "value": "[parameters('virtualMachineName')]"
           },
-          "iaasDiagnosticsStorageAccountName": {
-            "value": "[parameters('iaasDiagnosticsStorageAccountName')]"
+          "iaasDiagnosticsStorageAccount": {
+            "value": "[parameters('iaasDiagnosticsStorageAccount')]"
           },
           "vmAdminUsername": {
             "value": "[parameters('vmAdminUsername')]"
