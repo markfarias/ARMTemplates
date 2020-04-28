@@ -141,7 +141,7 @@
       }
     },
     {
-      "name": "ApplyBaseVMExtensions",
+      "name": "[concat(parameters('virtualMachineName'), '--ApplyBaseVMExtensions')]",
       "comments": "Applies the base Virtual Machine extensions",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2017-05-10",
