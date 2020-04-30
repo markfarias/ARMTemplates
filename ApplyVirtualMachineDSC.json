@@ -33,8 +33,8 @@
         "type": "DSC",
         "typeHandlerVersion": "2.20",
         "autoUpgradeMinorVersion": true,
-        "settings": "[parameters('dscPropertySettings')]",
-        "protectedSettings": "[if(not(empty(parameters('dscPropertyProtectedSettings'))), parameters('dscPropertyProtectedSettings'), json('null'))]"
+        "protectedSettings": "[if(not(empty(parameters('dscPropertyProtectedSettings'))), parameters('dscPropertyProtectedSettings'), json('null'))]",
+        "settings": "[parameters('dscPropertySettings')]"
       }
     }
   ],
