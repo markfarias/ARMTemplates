@@ -3,8 +3,7 @@
         @{             
             Nodename = "localhost"       
             Role = "Primary DC"
-            DomainName = "medchartcloud.gov"
-		PSDscAllowDomainUser = $true			
+			PSDscAllowDomainUser = $true			
             PsDscAllowPlainTextPassword = $true
         }            
     )             
