@@ -1,7 +1,10 @@
-$drv = Get-WmiObject win32_volume -Filter 'DriveLetter = "F:"'
-$drv.DriveLetter = "Y:"
-$drv.Put() | Out-Null
-
-$drv = Get-WmiObject win32_volume -Filter 'DriveLetter = "E:"'
-$drv.DriveLetter = "F:"
-$drv.Put() | Out-Null
+$drv1 = Get-WmiObject win32_volume -Filter 'DriveLetter = "F:"'
+if($drv1) {
+    $drv1.DriveLetter = "Y:"
+    $drv1.Put() | Out-Null
+}
+$drv2 = Get-WmiObject win32_volume -Filter 'DriveLetter = "E:"'
+if($drv2) {
+    $drv2.DriveLetter = "F:"
+    $drv2.Put() | Out-Null
+}
