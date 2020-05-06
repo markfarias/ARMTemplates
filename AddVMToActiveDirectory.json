@@ -21,7 +21,8 @@
       "type": "int"
     },
     "ouPath": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": ""
     }
   },
   "variables": {
