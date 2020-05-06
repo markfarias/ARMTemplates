@@ -46,7 +46,7 @@
           "User": "[concat(parameters('domainAdmin'), '@', parameters('domainName'))]",
           "Restart": "true",
           "Options": "[parameters('joinOptions')]",
-          "OUPath": "[parameters('ouPath')]"
+          "OUPath": "[if(not(empty(parameters('ouPath'))), parameters('ouPath'), json('null'))]"
         },
         "protectedSettings": {
           "Password": "[parameters('domainAdminPassword')]"
