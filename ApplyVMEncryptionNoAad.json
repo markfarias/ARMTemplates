@@ -1,0 +1,60 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "virtualMachineName": {
+      "type": "string"
+    },
+    "keyVaultURL": {
+      "type": "string"
+    },
+    "keyEncryptionKeyURL": {
+      "type": "securestring"
+    },
+    "keyEncryptionAlgorithm": {
+      "type": "string"
+    },
+    "volumeType": {
+      "type": "string"
+    },
+    "encryptionOperation": {
+      "type": "string"
+    },
+    "kekVaultResourdeId": {
+      "type": "string"
+    },
+    "keyVaultResourceId": {
+      "type": "string"
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('virtualMachineName'),'/AzureDiskEncryption')]",
+      "apiVersion": "2019-07-01",
+      "location": "[parameters('location')]",
+      "properties": {
+        "publisher": "Microsoft.Azure.Security",
+        "type": "AzureDiskEncryption",
+        "typeHandlerVersion": "2.2",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "EncryptionOperation": "[parameters('encryptionOperation')]",
+          "KeyEncryptionAlgorithm": "[parameters('keyEncryptionAlgorithm')]",
+          "KeyVaultURL": "[parameters('keyVaultURL')]",
+          "KekVaultResourceId": "[parameters('kekVaultResourdeId')]",
+          "KeyEncryptionKeyURL": "[parameters('keyEncryptionKeyURL')]",
+          "KeyVaultResourceId": "[parameters('keyVaultResourceId')]",
+          "VolumeType": "[parameters('volumeType')]"
+        }
+      }
+    }
+  ],
+  "outputs": {
+  }
+}
