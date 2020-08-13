@@ -106,7 +106,7 @@
     {
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('virtualMachineName')]",
-      "apiVersion": "2017-03-30",
+      "apiVersion": "2019-07-01",
       "location": "[parameters('location')]",
       "tags": "[parameters('tags')]",
       "dependsOn": [
