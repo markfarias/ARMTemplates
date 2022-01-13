@@ -30,9 +30,7 @@
       "tags": "[parameters('tags')]",
       "properties": {
         "addressSpace": {
-          "addressPrefixes": [
-            "[parameters('virtualNetworkAddressRange')]"
-          ]
+          "addressPrefixes": "[parameters('virtualNetworkAddressRange')]"
         },
         "subnets": "[parameters('subnets')]"
       }
