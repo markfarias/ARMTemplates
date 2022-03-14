@@ -1,0 +1,37 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "object"
+    },
+    "routeName": {
+      "type": "string"
+    },
+    "disableBgpRoutePropagation": {
+      "type": "bool"
+    },
+    "routes": {
+      "type": "object"
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/routeTables",
+      "apiVersion": "2021-05-01",
+      "name": "[parameters('routeName')]",
+      "location": "[parameters('location')]",
+      "tags": "[parameters('tags')]",
+      "properties": {
+        "disableBgpRoutePropagation": "[parameters('disableBgpRoutePropagation')]",
+        "routes": "[parameters('routes')]"
+      }
+    }
+  ],
+  "outputs": {}
+}
