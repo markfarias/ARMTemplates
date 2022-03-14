@@ -23,7 +23,7 @@
   "resources": [
     {
       "type": "Microsoft.Network/routeTables",
-      "apiVersion": "2021-05-01",
+      "apiVersion": "2018-11-01",
       "name": "[parameters('routeName')]",
       "location": "[parameters('location')]",
       "tags": "[parameters('tags')]",
