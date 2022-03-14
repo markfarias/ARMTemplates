@@ -15,7 +15,7 @@
       "type": "bool"
     },
     "routes": {
-      "type": "object"
+      "type": "array"
     }
   },
   "variables": {
