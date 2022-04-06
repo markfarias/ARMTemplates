@@ -18,7 +18,7 @@
     {
       "type": "Microsoft.Storage/storageAccounts/fileServices",
       "apiVersion": "2019-06-01",
-      "name": "[parameters('storageAccountName')]",
+      "name": "[concat(parameters('storageAccountName'), '/default/')]",
       "properties": "[parameters('properties')]"
     }
   ],
