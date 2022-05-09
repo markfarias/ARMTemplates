@@ -1,0 +1,30 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "keyvaultname": {
+      "type": "string"
+    },
+    "keyname": {
+      "type": "string"
+    },
+    "properties": {
+      "type": "object"
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "type": "Microsoft.KeyVault/vaults/keys",
+      "apiVersion": "2019-09-01",
+      "name": "[format('{0}/{1}', parameters('keyvaultname'), parameters('keyname'))]",
+      "properties": "[parameters('properties')]"
+    }
+  ],
+  "outputs": {
+  }
+}
