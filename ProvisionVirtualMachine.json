@@ -41,9 +41,6 @@
         "description": "Password for the Virtual Machine."
       }
     },
-    "bootDiagnosticsStorageAccountName": {
-      "type": "string"
-    },
     "iaasDiagnosticsStorageAccount": {
       "type": "object"
     },
@@ -134,8 +131,7 @@
         },
         "diagnosticsProfile": {
           "bootDiagnostics": {
-            "enabled": true,
-            "storageUri": "[concat('https', '://', parameters('bootDiagnosticsStorageAccountName'), '.blob.core.usgovcloudapi.net', '/')]"
+            "enabled": true
           }
         }
       }
