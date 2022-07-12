@@ -1,5 +1,5 @@
-﻿{
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "location": {
@@ -8,11 +8,8 @@
     "virtualNetworkName": {
       "type": "string"
     },
-    "virtualNetworkAddressRange": {
-      "type": "array"
-    },
-    "subnets": {
-      "type": "array"
+    "properties": {
+      "type": "object"
     },
     "tags": {
       "type": "object"
@@ -28,12 +25,7 @@
       "apiVersion": "2018-11-01",
       "dependsOn": [],
       "tags": "[parameters('tags')]",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": "[parameters('virtualNetworkAddressRange')]"
-        },
-        "subnets": "[parameters('subnets')]"
-      }
+      "properties": "[parameters('properties')]"
     }
   ],
   "outputs": {
