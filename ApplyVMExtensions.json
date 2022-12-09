@@ -358,7 +358,7 @@
       "properties": {
         "publisher": "Microsoft.Compute",
         "type": "VMAccessAgent",
-        "typeHandlerVersion": "2.0",
+        "typeHandlerVersion": "2.4.8",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "UserName": "[parameters('vmAdminUsername')]"
