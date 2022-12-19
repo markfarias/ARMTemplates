@@ -357,7 +357,7 @@
       ],
       "properties": {
         "publisher": "Microsoft.Compute",
-        "type": "enablevmaccess",
+        "type": "VMAccessagent",
         "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
