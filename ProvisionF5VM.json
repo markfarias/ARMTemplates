@@ -159,8 +159,7 @@
         },
         "diagnosticsProfile": {
           "bootDiagnostics": {
-            "enabled": true,
-            "storageUri": "[concat('https', '://', parameters('bootDiagnosticsStorageAccountName'), '.blob.core.usgovcloudapi.net', '/')]"
+            "enabled": false
           }
         }
       },
