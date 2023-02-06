@@ -47,9 +47,6 @@
         "description": "Password for the Virtual Machine."
       }
     },
-    "bootDiagnosticsStorageAccountName": {
-      "type": "string"
-    },
     "tags": {
       "type": "object"
     }
